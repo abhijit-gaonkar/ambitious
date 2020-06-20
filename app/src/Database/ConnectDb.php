@@ -1,5 +1,5 @@
 <?
-namespace Auth\Core\Database;
+namespace Ambitious\Core\Database;
 
 use PDO;
 // Singleton to connect db.

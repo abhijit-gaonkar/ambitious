@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth\Core\Validators;
+namespace Ambitious\Core\Validators;
 
 use JsonSchema;
 

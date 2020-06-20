@@ -16,5 +16,11 @@
     "justinrainbow/json-schema": "1.4.4",
     "guzzlehttp/psr7": "1.4.2",
     "php-di/slim-bridge": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ambitious\\Core\\": "app/src/",
+      "Auth\\Services\\": "services/src/"
+    }
   }
 }

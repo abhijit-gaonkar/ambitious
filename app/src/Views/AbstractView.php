@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth\Core\Views;
+namespace Ambitious\Core\Views;
 
 use Exception;
 use JsonSerializable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth\Core\Errors;
+namespace Ambitious\Core\Errors;
 
 
 class ErrorMessage {

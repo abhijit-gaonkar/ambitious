@@ -1,3 +1,3 @@
 <?php
 
-$app->post('/token', ['\\Auth\\Services\\Controllers\\AuthController','generateToken']) ;
+$app->post('/v1/token', ['\\Auth\\Services\\Controllers\\AuthController','generateToken']) ;
