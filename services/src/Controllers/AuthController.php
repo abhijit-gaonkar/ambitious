@@ -4,11 +4,12 @@ namespace Auth\Services\Controllers;
 
 use Ambitious\Core;
 use OAuth2;
+use GuzzleHttp\Psr7\Response;
 
 class AuthController
 {
 
-    function generateToken($request, $response)
+    function generateToken(\Slim\Http\Request $request,\Slim\Http\Response $response)
     {
         // create some users in memory
         $users = array('abhi' => array('password' => 'pass123', 'first_name' => 'Abhi', 'last_name' => 'G'));
@@ -27,8 +28,12 @@ class AuthController
         // add the grant type to your OAuth server
         $server->addGrantType($grantType);
 
-        $server->handleTokenRequest(OAuth2\Request::createFromGlobals())->send();
+        /** @var OAuth2\Response $responseObj */
+        $responseObj = $server->handleTokenRequest(OAuth2\Request::createFromGlobals());
 
+        $response->getBody()->write($responseObj->getResponseBody());
+        return $response
+            ->withStatus($responseObj->getStatusCode());
     }
 
 }
