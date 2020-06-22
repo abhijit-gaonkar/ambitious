@@ -1,43 +1,21 @@
 version: '2'
+
 services:
-
   web:
-    image: nginx
+    image: php-basic-nginx
     ports:
-      - "8089:80"
-      - "8443:443"
-    links:
-      - php
-      - mysql
+      - "8080:80"
     volumes:
-      - ./sites:/etc/nginx/conf.d
-      - ./conf/nginx.conf:/etc/nginx/nginx.conf
-    volumes_from:
-      - code
-
+      - .:/var/www/html/
+    networks:
+      - code-network
   php:
-    build: .
-    working_dir: /var/www/test/current
-    volumes_from:
-      - code
-    env_file:
-          - ./.env
-    extra_hosts:
-          - "dockerhost:${DOCKER_HOST_IP}"
-  mysql:
-    image: mysql
-    ports:
-      - "33061:3306"
-      - "3306:3306"
+    image: php-basic-php-fpm
     volumes:
-      - ./mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+      - .:/var/www/html/
+    networks:
+      - code-network
 
-  redis:
-    image: redis:3.0-alpine
-
-  code:
-    image: busybox
-    volumes:
-      - .:/var/www/test/current/
+networks:
+  code-network:
+    driver: bridge

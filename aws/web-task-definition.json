@@ -1,0 +1,30 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "nginx",
+            "image": "290988396993.dkr.ecr.us-west-1.amazonaws.com/ambitious/nginx",
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80
+                }
+            ],
+            "links": ["php"],
+            "memory": 256,
+            "cpu": 100
+        },
+        {
+            "name": "php",
+            "image": "290988396993.dkr.ecr.us-west-1.amazonaws.com/ambitious/php",
+            "portMappings": [
+                {
+                    "containerPort": 8000,
+                    "hostPort": 9000
+                }
+            ],
+            "memory": 50,
+            "cpu": 102
+        }
+    ],
+    "family": "web"
+}

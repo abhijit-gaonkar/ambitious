@@ -4,7 +4,6 @@ namespace Auth\Services\Controllers;
 
 use Ambitious\Core;
 use OAuth2;
-use GuzzleHttp\Psr7\Response;
 
 class AuthController
 {
@@ -32,8 +31,10 @@ class AuthController
         $responseObj = $server->handleTokenRequest(OAuth2\Request::createFromGlobals());
 
         $response->getBody()->write($responseObj->getResponseBody());
+
         return $response
-            ->withStatus($responseObj->getStatusCode());
+            ->withStatus($responseObj->getStatusCode())
+            ->withHeader('Content-Type', 'application/json');
     }
 
 }
