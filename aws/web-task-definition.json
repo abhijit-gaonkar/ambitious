@@ -2,7 +2,7 @@
     "containerDefinitions": [
         {
             "name": "nginx",
-            "image": "290988396993.dkr.ecr.us-west-1.amazonaws.com/ambitious/nginx",
+            "image": "290988396993.dkr.ecr.us-east-1.amazonaws.com/ambitious/nginx",
             "portMappings": [
                 {
                     "containerPort": 80,
@@ -15,7 +15,7 @@
         },
         {
             "name": "php",
-            "image": "290988396993.dkr.ecr.us-west-1.amazonaws.com/ambitious/php",
+            "image": "290988396993.dkr.ecr.us-east-1.amazonaws.com/ambitious/php",
             "portMappings": [
                 {
                     "containerPort": 8000,
