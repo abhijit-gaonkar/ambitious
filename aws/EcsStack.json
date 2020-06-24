@@ -637,7 +637,9 @@
       }
     },
     "ecscluster":{
-      "Value": "Ambitious"
+      "Value": {
+        "Ref": "ECSCluster"
+      }
     },
     "ECSALB":{
       "Description":"Your ALB DNS URL",
