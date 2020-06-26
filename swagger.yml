@@ -1,0 +1,586 @@
+swagger: '2.0'
+info:
+  description: Welcome to Ambitious api.<br> Listed below are REST api's per Microservice.
+  version: 'v1'
+  title: Ambitious
+basePath: /
+tags:
+  - name: 01. Auth
+  - name: 02. Product
+  - name: 03. Order
+  - name: 04. Product Search
+  - name: 05. Shopping Cart
+  - name: 06. Fulfillment
+schemes:
+  - https
+paths:
+  /v1/token:
+    post:
+      tags:
+        - 01. Auth
+      summary: Authenticate user with OAuth2 password grant type
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: grant_type
+          in: query
+          description: 'should be "password"'
+          required: true
+          type: string
+        - name: username
+          in: query
+          description: ''
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: ''
+          required: true
+          type: string
+        - name: client_id
+          in: query
+          description: ''
+          required: true
+          type: string
+        - name: client_secret
+          in: query
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/AuthResponse'
+        '400':
+          description: 400 invalid_client
+          schema:
+            $ref: '#/definitions/400ClientResponse'
+        '401':
+          description: 401 invalid_grant
+          schema:
+            $ref: '#/definitions/401UserResponse'
+  /v1/fulfillment:
+    post:
+      description: Create Fulfillment for Order
+      tags:
+        - 06. Fulfillment
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Provide Fulfillment details
+          required: true
+          schema:
+            $ref: '#/definitions/Fulfillment'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/FulfillmentSuccess'
+  /v1/fulfillment/{fulfillment-id}:
+    get:
+      description: Get fulfillment details for a filfillment id
+      tags:
+        - 06. Fulfillment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: fulfillment-id
+          in: path
+          description: Provide fulfillment Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/Fulfillment'
+    delete:
+      description: Delete a fulfillment based on filfillment id
+      tags:
+        - 06. Fulfillment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: fulfillment-id
+          in: path
+          description: Provide fulfillment Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+  /v1/order:
+    post:
+      description: Create an order
+      tags:
+        - 03. Order
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Provide Order details
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/OrderSuccess'
+  /v1/order/{order-id}:
+    get:
+      description: Get order details for an order id
+      tags:
+        - 03. Order
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: order-id
+          in: path
+          description: Provide order Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/Order'
+    put:
+      description: Update order details for an order id
+      tags:
+        - 03. Order
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: order-id
+          in: path
+          description: Provide order Id
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Provide Order details
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        '200':
+          description: 200 response
+    delete:
+      description: Delete an order based on Order Id
+      tags:
+        - 03. Order
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: order-id
+          in: path
+          description: Provide order Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+  /v1/product/{product-id}:
+    get:
+      description: Get product details for a product id
+      tags:
+        - 02. Product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: product-id
+          in: path
+          description: Provide product Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/Product'
+    put:
+      description: Update product details for an order id
+      tags:
+        - 02. Product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: product-id
+          in: path
+          description: Provide product Id
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Provide Product details
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: 200 response
+    delete:
+      description: Delete order based an order id
+      tags:
+        - 02. Product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: product-id
+          in: path
+          description: Provide product Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+  /v1/product:
+    post:
+      description: Create a product in the product catalog
+      tags:
+        - 02. Product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Provide Product details
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/ProductSuccess'
+  /v1/product-search:
+    get:
+      description: Search for a product
+      tags:
+        - 04. Product Search
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: searchText
+          in: query
+          description: 'Query to search product'
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/ProductSearch'
+  /v1/shopping-cart:
+    post:
+      description: Create a shopping cart
+      tags:
+        - 05. Shopping Cart
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Provide Shopping cart details
+          required: true
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/ShoppingCartSuccess'
+  /v1/shopping-cart/{cart-id}:
+    put:
+      description: Add items in the shopping cart
+      tags:
+        - 05. Shopping Cart
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: cart-id
+          in: path
+          description: Provide cart Id
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Provide Shopping Cart details
+          required: true
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+      responses:
+        '200':
+          description: 200 response
+  /v1/shopping-cart/{cart-id}/item:
+    get:
+      description: Get items a shopping cart
+      tags:
+        - 05. Shopping Cart
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: cart-id
+          in: path
+          description: Provide cart Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+    delete:
+      description: Delete items from a shopping cart
+      tags:
+        - 05. Shopping Cart
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: 'Provide bearer:{Access Token}.This value will be used for authentication / authorization only'
+          required: true
+          type: string
+        - name: cart-id
+          in: path
+          description: Provide cart Id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 200 response
+definitions:
+  AuthResponse:
+    type: object
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: integer
+        format: int32
+      token_type:
+        type: string
+      refresh_token:
+        type: string
+  400ClientResponse:
+    type: object
+    properties:
+      error:
+        type: string
+      error_description:
+        type: string
+    example:
+      error: invalid_client
+      error_description: The client credentials are invalid
+  401UserResponse:
+    type: object
+    properties:
+      error:
+        type: string
+      error_description:
+        type: string
+    example:
+      error: invalid_grant
+      error_description: Invalid username and password combination
+  Product:
+    type: object
+    properties:
+      product_name:
+        type: string
+      product_price:
+        type: number
+      product_description:
+        type: string
+  ProductSearch:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          type: object
+          properties:
+            product_id:
+              type: integer
+            product_name:
+              type: string
+            product_price:
+              type: integer
+            product_description:
+              type: string
+  Order:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          type: object
+          properties:
+            product_id:
+              type: integer
+            quantity:
+              type: integer
+            price:
+              type: number
+  ShoppingCart:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            product_id:
+              type: integer
+            price:
+              type: number
+            quantity:
+              type: integer
+  Fulfillment:
+    type: object
+    properties:
+      order_id:
+        type: integer
+      shipping_details:
+        type: object
+        properties:
+          name:
+            type: string
+          address:
+            type: string
+          phone_number:
+            type: string
+  FulfillmentSuccess:
+    type: object
+    properties:
+      fulfillment_id:
+        type: integer
+  OrderSuccess:
+    type: object
+    properties:
+      order_id:
+        type: integer
+  ProductSuccess:
+    type: object
+    properties:
+      product_id:
+        type: integer
+  ShoppingCartSuccess:
+    type: object
+    properties:
+      cart_id:
+        type: integer

@@ -22,10 +22,13 @@ Official nginx and php-fpm docker images are used to build the app.
 `$ docker-compose up -d` <br>
 *Note: docker-compose.yml is used for development only.*
 
+Application will now be running on port 8080<br>
+http://localhost:8080/status should return http status code 200
+
 ## Deploy Application to AWS
 
 ### Application Architecture in AWS
-![Architecture](stack.png)
+![Architecture](img/stack.png)
 
 ### Register Images in AWS ECR<br>
 
@@ -57,7 +60,7 @@ Once the stack is deployed the Output will have following values<br>
 * ecsservice: ARN of ecs service
 * taskdef: ARN of task-definition
 
-![stack output](StackOp.png)
+![stack output](img/StackOp.png)
 
 The application **login page** and **Auth service**(v1/token) will now be accessible at ECSALB.<br>
 'ecsclusster' & 'ecsservice' values will be needed to set up the CI/CD which is described in the next section
@@ -70,16 +73,16 @@ cluster: ECS-ECSCluster-127njYEvBMeB
 
 The [workflow](https://github.com/abhijit-gaonkar/ambitious/actions) gets triggered when a release is created...
 
-![workflow](workflow.png)<br><br>
-![deploy-workflow](deployWorkflow.png)
+![workflow](img/workflow.png)<br><br>
+![deploy-workflow](img/deployWorkflow.png)
 
 
 ### The Application
 The Auth service can be invoked by postman. See example below.
-![postman](postman.png)
+![postman](img/postman.png)
 
 The login page integrates with Auth service.
-![login](login.png)
+![login](img/login.png)
 
 To Test, use credentials `username: abhi password: pass123`
 
