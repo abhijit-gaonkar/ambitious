@@ -1,5 +1,5 @@
 # Ambitious
-Ambitious goal of rebuilding Amazon.com’s shopping experience as a set of microservices.<br>
+Ambitious goal of rebuilding Amazon.com’s shopping experience as a set of [microservices](https://abhijit-gaonkar.github.io/ambitious/).<br>
 
 This repo builds the **Auth** service which implements OAuth2 grant-type password. <br>
 A login page is also set up which integrates with the Auth service.<br>
