@@ -14,7 +14,7 @@
     "monolog/monolog": "^1.7",
     "bshaffer/oauth2-server-php": "^1.10",
     "justinrainbow/json-schema": "1.4.4",
-    "guzzlehttp/psr7": "1.4.2",
+    "guzzlehttp/psr7": "1.9.1",
     "php-di/slim-bridge": "^2.0"
   },
   "autoload": {
